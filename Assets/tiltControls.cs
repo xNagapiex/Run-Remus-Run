@@ -7,4 +7,4 @@ public class AccelerometerInput : MonoBehaviour
     {
         transform.Translate(Input.acceleration.x, Input.acceleration.y, 0);
     }
-}
+} 
