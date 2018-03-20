@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class gamemanager : MonoBehaviour {
 
@@ -100,5 +101,10 @@ public class gamemanager : MonoBehaviour {
     {
         playerDead = true;
         gameover.gameObject.SetActive(true);
+    }
+
+    public void RetryButton()
+    {
+        SceneManager.LoadScene("Level");
     }
 }
