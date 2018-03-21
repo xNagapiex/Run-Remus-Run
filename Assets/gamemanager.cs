@@ -9,6 +9,7 @@ public class gamemanager : MonoBehaviour {
     private int score = 0;
     public Text gameover;
     public Text scoreboard;
+    public Button accelButton;
     public Text time;
     bool easyClear = false;
     bool mediumClear = false;
@@ -25,6 +26,7 @@ public class gamemanager : MonoBehaviour {
 	void Start ()
     {
         InvokeRepeating("SpawnPlanet", 0.01f, 2f);
+        Time.timeScale = 0;
 	}
 	
 	// Update is called once per frame
@@ -106,5 +108,11 @@ public class gamemanager : MonoBehaviour {
     public void RetryButton()
     {
         SceneManager.LoadScene("Level");
+    }
+
+    public void AccelOK()
+    {
+        Time.timeScale = 1;
+        accelButton.gameObject.SetActive(false);
     }
 }
