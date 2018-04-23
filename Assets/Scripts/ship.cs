@@ -5,7 +5,6 @@ public class ship : MonoBehaviour
 {
     public Rigidbody2D rb;
     bool dead = false;
-    Vector3 neutralAccel;
     public float speed;
     public GameObject gameManager;
     public GameObject projectile;
@@ -16,25 +15,24 @@ public class ship : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         projectileOffset = new Vector3(0, 0.7f, 1);
         InvokeRepeating("Shoot", 0.01f, 0.1f);
-        Vector3 neutralAccel = Vector3.zero;
     }
 
     void FixedUpdate()
     {
-        if (!dead) // If not dead, take input and move accordingly
+        if (!dead)
         {
-            Vector3 accel = Input.acceleration - neutralAccel;
 
-            rb.velocity = new Vector3(accel.x * speed, accel.y * speed, 0);
+            rb.velocity = new Vector3(Input.acceleration.x * speed, Input.acceleration.y * speed, 0);
 
+            Vector3 accel = Input.acceleration;
 
-            //if (accel == new Vector3(0, 0, 0)) // For testing movement in Editor
-            //{
-            //    Vector3 mousePosition = Input.mousePosition;
-            //    mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-            //    transform.position = Vector3.MoveTowards(transform.position, new Vector3(mousePosition.x, mousePosition.y, 0),
-            //    speed * Time.deltaTime);
-            //}
+            if (accel == new Vector3(0, 0, 0)) // For testing movement in Editor
+            {
+                Vector3 mousePosition = Input.mousePosition;
+                mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(mousePosition.x, mousePosition.y, 0),
+                speed * Time.deltaTime);
+            }
         }
     }
 
@@ -54,11 +52,5 @@ public class ship : MonoBehaviour
     private void Shoot()
     {
         Instantiate(projectile, transform.position + projectileOffset, Quaternion.identity);
-    }
-
-    public void SetNeutralAccel()
-    {
-        neutralAccel = Input.acceleration;
-        gameManager.GetComponent<gamemanager>().AccelOK();
     }
 }
