@@ -9,6 +9,8 @@ public class gamemanager : MonoBehaviour {
     private int score = 0;
     public Text gameover;
     public Text scoreboard;
+    public Button accelButton;
+    public Button resetButton;
     public Text time;
     bool easyClear = false;
     bool mediumClear = false;
@@ -24,7 +26,7 @@ public class gamemanager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
-        InvokeRepeating("SpawnPlanet", 0.01f, 2f);
+        Time.timeScale = 0;
 	}
 	
 	// Update is called once per frame
@@ -108,8 +110,11 @@ public class gamemanager : MonoBehaviour {
         SceneManager.LoadScene("Level");
     }
 
-    public void toMenu()
+    public void AccelOK()
     {
-        SceneManager.LoadScene("Menu");
+        Time.timeScale = 1;
+        accelButton.gameObject.SetActive(false);
+        resetButton.gameObject.SetActive(true);
+        InvokeRepeating("SpawnPlanet", 0.01f, 2f);
     }
 }
