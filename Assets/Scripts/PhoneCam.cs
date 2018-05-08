@@ -14,25 +14,35 @@ public class PhoneCam : MonoBehaviour {
 
     private void Start()
     {
+        StartCam();
+    }
+
+    private void Update()
+    {
+        UpdateCam();
+    }
+
+    void StartCam()
+    {
         defaultBG = background.texture;
         WebCamDevice[] devices = WebCamTexture.devices;
 
-        if(devices.Length == 0)
+        if (devices.Length == 0)
         {
             Debug.Log("Camera not found.");
             camAvailable = false;
             return;
         }
 
-        for(int i = 0; i < devices.Length; i++)
+        for (int i = 0; i < devices.Length; i++)
         {
-            if(!devices[i].isFrontFacing)
+            if (!devices[i].isFrontFacing)
             {
                 backCam = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
             }
         }
 
-        if (backCam ==null)
+        if (backCam == null)
         {
             Debug.Log("Back camera not found.");
             return;
@@ -44,7 +54,7 @@ public class PhoneCam : MonoBehaviour {
         camAvailable = true;
     }
 
-    private void Update()
+    void UpdateCam()
     {
         if (!camAvailable)
             return;
@@ -56,5 +66,6 @@ public class PhoneCam : MonoBehaviour {
         background.rectTransform.localEulerAngles = new Vector3(1f, scaleY, 1f);
 
         int orient = -backCam.videoRotationAngle;
+        background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
     }
 }
