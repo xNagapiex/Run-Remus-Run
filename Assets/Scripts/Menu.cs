@@ -7,6 +7,7 @@ public class Menu : MonoBehaviour {
 
     public GameObject menu;
     public GameObject beforeGame;
+    gamemanager gm;
 
 	// Use this for initialization
 	void Start () {
@@ -27,11 +28,13 @@ public class Menu : MonoBehaviour {
     public void Play()
     {
         SceneManager.LoadScene("Level");
+        gm.phoneCamOn = false;
     }
 
     public void PlayWithCamera()
     {
-        SceneManager.LoadScene("LevelWCamera");
+        SceneManager.LoadScene("Level");
+        gm.phoneCamOn = true;
     }
 
     public void HiScore()

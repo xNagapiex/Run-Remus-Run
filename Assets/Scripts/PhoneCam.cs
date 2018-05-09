@@ -8,9 +8,12 @@ public class PhoneCam : MonoBehaviour {
     private bool camAvailable;
     private WebCamTexture backCam;
     private Texture defaultBG;
+    public Texture starryBG;
 
     public RawImage background;
     public AspectRatioFitter fit;
+
+    gamemanager gm;
 
     private void Start()
     {
@@ -24,40 +27,50 @@ public class PhoneCam : MonoBehaviour {
 
     void StartCam()
     {
-        defaultBG = background.texture;
-        WebCamDevice[] devices = WebCamTexture.devices;
-
-        if (devices.Length == 0)
+        if(gm.phoneCamOn)
         {
-            Debug.Log("Camera not found.");
-            camAvailable = false;
-            return;
-        }
+            defaultBG = background.texture;
+            WebCamDevice[] devices = WebCamTexture.devices;
 
-        for (int i = 0; i < devices.Length; i++)
-        {
-            if (!devices[i].isFrontFacing)
+            if (devices.Length == 0)
             {
-                backCam = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
+                Debug.Log("Camera not found.");
+                camAvailable = false;
+                return;
             }
-        }
 
-        if (backCam == null)
+            for (int i = 0; i < devices.Length; i++)
+            {
+                if (!devices[i].isFrontFacing)
+                {
+                    backCam = new WebCamTexture(devices[i].name, Screen.width, Screen.height);
+                }
+            }
+
+            if (backCam == null)
+            {
+                Debug.Log("Back camera not found.");
+                return;
+            }
+
+            backCam.Play();
+            background.texture = backCam;
+
+            camAvailable = true;
+        }
+        else
         {
-            Debug.Log("Back camera not found.");
-            return;
+            background.texture = starryBG;
         }
-
-        backCam.Play();
-        background.texture = backCam;
-
-        camAvailable = true;
     }
 
     void UpdateCam()
     {
         if (!camAvailable)
+        {
+            background.texture = starryBG;
             return;
+        }
 
         float ratio = (float)backCam.width / (float)backCam.height;
         fit.aspectRatio = ratio;
