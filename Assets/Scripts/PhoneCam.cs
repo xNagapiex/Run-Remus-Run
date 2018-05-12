@@ -14,16 +14,6 @@ public class PhoneCam : MonoBehaviour {
 
     private void Start()
     {
-        StartCam();
-    }
-
-    private void Update()
-    {
-        UpdateCam();
-    }
-
-    void StartCam()
-    {
         defaultBG = background.texture;
         WebCamDevice[] devices = WebCamTexture.devices;
 
@@ -45,6 +35,8 @@ public class PhoneCam : MonoBehaviour {
         if (backCam == null)
         {
             Debug.Log("Back camera not found.");
+            background = null;
+            print("bg null at start.");
             return;
         }
 
@@ -54,7 +46,7 @@ public class PhoneCam : MonoBehaviour {
         camAvailable = true;
     }
 
-    void UpdateCam()
+    private void Update()
     {
         if (!camAvailable)
             return;
@@ -67,5 +59,6 @@ public class PhoneCam : MonoBehaviour {
 
         int orient = -backCam.videoRotationAngle;
         background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+
     }
 }
