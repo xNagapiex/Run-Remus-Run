@@ -22,6 +22,7 @@ public class gamemanager : MonoBehaviour {
     int lastPlanet = 0;
     int random = 0;
     bool playerDead = false;
+    public bool phoneCamOn = false;
 
 	// Use this for initialization
 	void Start ()
