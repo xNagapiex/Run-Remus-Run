@@ -10,7 +10,6 @@ public class gamemanager : MonoBehaviour {
     public Text gameover;
     public Text scoreboard;
     public Button accelButton;
-    public Button resetButton;
     public Text time;
     bool easyClear = false;
     bool mediumClear = false;
@@ -22,7 +21,6 @@ public class gamemanager : MonoBehaviour {
     int lastPlanet = 0;
     int random = 0;
     bool playerDead = false;
-    public bool phoneCamOn = false;
 
 	// Use this for initialization
 	void Start ()
@@ -108,14 +106,19 @@ public class gamemanager : MonoBehaviour {
 
     public void RetryButton()
     {
-        SceneManager.LoadScene("Level");
+        Scene sceneToReload = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(sceneToReload.name);
+    }
+
+    public void BackToMenuButton()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
     public void AccelOK()
     {
         Time.timeScale = 1;
         accelButton.gameObject.SetActive(false);
-        resetButton.gameObject.SetActive(true);
         InvokeRepeating("SpawnPlanet", 0.01f, 2f);
     }
 }

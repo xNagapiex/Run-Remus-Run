@@ -26,10 +26,6 @@ public class ship : MonoBehaviour
 
             Vector3 accel = Input.acceleration - neutralAccel;
 
-    //        testText.text = "Accel: " + System.Math.Round((decimal)Input.acceleration.x, 2) + ", " + System.Math.Round((decimal)Input.acceleration.y, 2) + ", " + System.Math.Round((decimal)Input.acceleration.z, 2) +
-    //"\nNeutral: " + System.Math.Round((decimal)neutralAccel.x, 2) + ", " + System.Math.Round((decimal)neutralAccel.y, 2) + ", " + System.Math.Round((decimal)neutralAccel.z, 2) +
-    //"\nMovement: " + System.Math.Round((decimal)accel.x, 2) + ", " + System.Math.Round((decimal)accel.y, 2) + ", " + System.Math.Round((decimal)accel.z, 2);
-
             if (neutralAccel.z >= 1)
             {
                 accel = -(accel);
@@ -37,6 +33,10 @@ public class ship : MonoBehaviour
 
             rb.velocity = new Vector3(accel.x * speed, accel.y * speed, 0);
 
+            if(Input.touchCount > 0)
+            {
+                ResetNeutralAccel();
+            }
 
             //if (accel == new Vector3(0, 0, 0)) // For testing movement in Editor
             //{

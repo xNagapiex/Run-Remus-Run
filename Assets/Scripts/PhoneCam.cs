@@ -7,15 +7,12 @@ public class PhoneCam : MonoBehaviour {
 
     private bool camAvailable;
     private WebCamTexture backCam;
-    private Texture defaultBG;
     
-    public GUITexture starryBG;
     public RawImage background;
     public AspectRatioFitter fit;
 
     private void Start()
     {
-        defaultBG = background.texture;
         WebCamDevice[] devices = WebCamTexture.devices;
 
         if (devices.Length == 0)
@@ -57,11 +54,11 @@ public class PhoneCam : MonoBehaviour {
         float ratio = (float)backCam.width / (float)backCam.height;
         fit.aspectRatio = ratio;
 
-        //float scaleY = backCam.videoVerticallyMirrored ? -1f : 1f;
-        //background.rectTransform.localEulerAngles = new Vector3(1f, scaleY, 1f);
+        float scaleY = backCam.videoVerticallyMirrored ? -1f : 1f;
+        background.rectTransform.localScale = new Vector3(1f, scaleY, 1f);
 
-        //int orient = -backCam.videoRotationAngle;
-        //background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
+        int orient = -backCam.videoRotationAngle;
+        background.rectTransform.localEulerAngles = new Vector3(0, 0, orient);
 
     }
 }
