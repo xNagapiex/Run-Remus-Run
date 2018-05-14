@@ -8,16 +8,14 @@ public class PhoneCam : MonoBehaviour {
     private bool camAvailable;
     private WebCamTexture backCam;
     private Texture defaultBG;
-
-    public GUITexture background;
+    
     public GUITexture starryBG;
-    //public RawImage background;
+    public RawImage background;
     public AspectRatioFitter fit;
 
     private void Start()
     {
         defaultBG = background.texture;
-        background.pixelInset = new Rect(0, 0, Screen.width, Screen.height);
         WebCamDevice[] devices = WebCamTexture.devices;
 
         if (devices.Length == 0)
@@ -53,7 +51,6 @@ public class PhoneCam : MonoBehaviour {
     {
         if (!camAvailable)
         {
-            background = starryBG;
             return;
         }
 
